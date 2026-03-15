@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}`,
+  baseURL: "https://tastyhaat-server.vercel.app",
 });
 
 axiosSecure.interceptors.request.use(

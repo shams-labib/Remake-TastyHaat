@@ -7,6 +7,7 @@ import Contact from "./Contact";
 import About from "./About";
 import TeamSection from "../Team Member/TeamSection ";
 import TopSellerBurgers from "../TopBurger/TopBurger";
+import FloatingActionButtons from "../../Components/FloatingContactButtons";
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
       <TeamSection></TeamSection>
       <WhyChooseUs></WhyChooseUs>
       <Contact></Contact>
+      <FloatingActionButtons />
     </div>
   );
 };

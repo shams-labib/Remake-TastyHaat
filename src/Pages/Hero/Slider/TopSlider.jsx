@@ -14,29 +14,27 @@ const sliderImages = [
     img: "https://i.ibb.co/ZpwLvz6X/360-F-187860162-h-WCup6-TWAb-Kw-Oz-S3s-Kxkn2-ZDZm-Gx-ZA47.jpg",
     title: "Delicious Food",
     subtitle: "Get your favorite meals delivered fast",
-    highlight: "Delicious",
   },
   {
     img: "https://i.ibb.co/nMk9JXF7/image.png",
     title: "Fast Delivery",
     subtitle: "We reach your door in minutes",
-    highlight: "Fast",
   },
   {
     img: "https://i.ibb.co/tw4NK5LF/image.png",
     title: "Fresh & Hot",
     subtitle: "Your order comes with love ❤️",
-    highlight: "Fresh",
   },
 ];
 
 const TopSlider = () => {
   return (
-    <section className="container mx-auto my-10 px-4">
-      <div className="relative w-full h-[350px] md:h-[550px] overflow-hidden rounded-[2rem] shadow-2xl group">
+    <section className="container mx-auto my-6 md:my-10 px-0 sm:px-4">
+      {/* Mobile-e height barano hoyeche (h-[500px]) */}
+      <div className="relative w-full h-[500px] md:h-[600px] overflow-hidden sm:rounded-[2rem] shadow-2xl group">
         <Swiper
           modules={[Autoplay, Pagination, EffectFade]}
-          effect="fade" // Added fade effect for a more premium feel
+          effect="fade"
           autoplay={{ delay: 5000, disableOnInteraction: false }}
           pagination={{
             clickable: true,
@@ -50,7 +48,7 @@ const TopSlider = () => {
             <SwiperSlide key={i}>
               {({ isActive }) => (
                 <div className="w-full h-full relative">
-                  {/* Background Image with Ken Burns Effect */}
+                  {/* Background Image */}
                   <motion.div
                     initial={{ scale: 1.2 }}
                     animate={isActive ? { scale: 1 } : { scale: 1.2 }}
@@ -60,25 +58,25 @@ const TopSlider = () => {
                     <img
                       src={item.img}
                       alt={item.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-center"
                     />
                   </motion.div>
 
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent flex flex-col justify-center items-start text-left text-white px-8 md:px-20">
+                  {/* Enhanced Gradient Overlay for Mobile and Desktop */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 md:bg-gradient-to-r md:from-black/80 md:via-black/40 to-transparent flex flex-col justify-end md:justify-center items-start text-left text-white px-6 pb-16 md:px-20 md:pb-0">
                     {/* Badge */}
                     <motion.span
                       initial={{ opacity: 0, x: -20 }}
                       animate={isActive ? { opacity: 1, x: 0 } : {}}
                       transition={{ duration: 0.5, delay: 0.3 }}
-                      className="bg-primary/20 backdrop-blur-md border border-primary/30 text-primary px-4 py-1 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest mb-4"
+                      className="bg-primary/20 backdrop-blur-md border border-primary/30 text-primary px-3 py-1 rounded-full text-[10px] md:text-sm font-bold uppercase tracking-widest mb-3"
                     >
                       Top Rated Service
                     </motion.span>
 
-                    {/* Title */}
+                    {/* Title - Mobile Responsive Font Size */}
                     <motion.h2
-                      className="text-4xl md:text-7xl font-black mb-4 leading-tight"
+                      className="text-3xl md:text-7xl font-black mb-3 leading-tight"
                       initial={{ y: 30, opacity: 0 }}
                       animate={isActive ? { y: 0, opacity: 1 } : {}}
                       transition={{ duration: 0.8, delay: 0.5 }}
@@ -91,7 +89,7 @@ const TopSlider = () => {
 
                     {/* Subtitle */}
                     <motion.p
-                      className="text-base md:text-xl mb-8 font-medium text-slate-200 max-w-md"
+                      className="text-sm md:text-xl mb-6 font-medium text-slate-200 max-w-xs md:max-w-md"
                       initial={{ y: 20, opacity: 0 }}
                       animate={isActive ? { y: 0, opacity: 1 } : {}}
                       transition={{ duration: 0.8, delay: 0.7 }}
@@ -107,7 +105,7 @@ const TopSlider = () => {
                     >
                       <Link
                         to="/all-menu"
-                        className="group/btn relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-300 bg-primary rounded-full hover:bg-secondary shadow-[0_10px_20px_-10px_rgba(255,96,0,0.5)] active:scale-95"
+                        className="group/btn relative inline-flex items-center justify-center px-8 py-3 md:px-10 md:py-4 font-bold text-white transition-all duration-300 bg-primary rounded-full hover:bg-secondary shadow-lg active:scale-95 text-sm md:text-base"
                       >
                         Order Now
                         <motion.span
@@ -126,21 +124,25 @@ const TopSlider = () => {
           ))}
         </Swiper>
 
-        {/* Custom Pagination Style Overrides (Scoped to this component) */}
+        {/* Custom Pagination Style */}
         <style
           dangerouslySetInnerHTML={{
             __html: `
           .swiper-pagination-bullet {
             background: white !important;
             opacity: 0.5;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
           }
           .swiper-pagination-bullet-active {
-            background: #ff6000 !important; /* Your primary color */
+            background: #ff6000 !important;
             opacity: 1;
-            width: 30px;
+            width: 25px;
             border-radius: 5px;
+          }
+          @media (min-width: 768px) {
+            .swiper-pagination-bullet { width: 10px; height: 10px; }
+            .swiper-pagination-bullet-active { width: 30px; }
           }
         `,
           }}
