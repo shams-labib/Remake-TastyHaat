@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const Loader = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex items-center justify-center min-h-screen">
       <motion.div
         className="w-16 h-16 border-4 border-t-transparent border-blue-500 rounded-full"
         animate={{ rotate: 360 }}

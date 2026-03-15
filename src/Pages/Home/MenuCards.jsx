@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { ShoppingCart, Star, Heart } from "lucide-react";
+import Loader from "../Loader/Loader";
 
 const MenuCards = () => {
   const [menus, setMenus] = useState([]);
@@ -21,9 +22,7 @@ const MenuCards = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="text-center py-20 text-gray-500">Loading Menus...</div>
-    );
+    return <Loader />;
   }
 
   return (
