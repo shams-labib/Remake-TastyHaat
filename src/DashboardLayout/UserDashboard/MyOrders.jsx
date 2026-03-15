@@ -1,19 +1,28 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import useAuth from "../../Context/useAuth/useAuth";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [redirectUrl, setRedirectUrl] = useState(null);
+  const { user } = useAuth();
 
   useEffect(() => {
-    const apiUrl = `${import.meta.env.VITE_API_URL}/orders`;
-    fetch(apiUrl)
-      .then((res) => res.json())
-      .then((data) => setOrders(data))
-      .catch((err) => console.error("Error loading orders:", err))
-      .finally(() => setLoading(false));
-  }, []);
+    // Only fetch if user email is available
+    if (user?.email) {
+      const apiUrl = `${import.meta.env.VITE_API_URL}/orders?email=${user.email}`;
+
+      fetch(apiUrl)
+        .then((res) => res.json())
+        .then((data) => setOrders(data))
+        .catch((err) => console.error("Error loading orders:", err))
+        .finally(() => setLoading(false));
+    } else {
+      // If there is no user, stop loading
+      setLoading(false);
+    }
+  }, [user?.email]);
 
   const handlePay = async (order) => {
     try {
@@ -30,7 +39,7 @@ const MyOrders = () => {
             userName: order.username,
             description: order.menuName,
           }),
-        }
+        },
       );
 
       const data = await res.json();
