@@ -1,0 +1,32 @@
+/* src/index.css বা src/App.css বা যেখানে তোমার মেইন CSS আছে */
+
+@import "tailwindcss";
+
+@plugin "daisyui";
+
+/* আপনাদের কাস্টম কালার দিয়ে light থিম কাস্টমাইজ  */
+@plugin "daisyui/theme" {
+  name: "tastyhaat";
+  default: true;
+  color-scheme: light;
+
+  /* আপনাদের খাবারের থিমের কালার */
+  --color-primary: #fb2c36; /* মেইন রেড (যেমন Order Now বাটন) */
+  --color-primary-content: #ffffff; /* প্রাইমারির উপরে টেক্সট/আইকন */
+
+  --color-secondary: #f39c12; /* হলুদ/অরেঞ্জ (যেমন হাইলাইট) */
+
+  --color-accent: #37cdbe; /* টিল/সবুজ-নীল (যেমন সাকসেস/আকর্ষণীয় এলিমেন্ট) */
+
+  --color-neutral: #3d4451; /* ডার্ক গ্রে/কালো (টেক্সট, বর্ডার) */
+
+  /* অপশনাল: বেস কালারগুলো চাইলে আরও কাস্টম করতে পারবেন এখান থেকে */
+  --color-base-100: #ffffff; /* মেইন ব্যাকগ্রাউন্ড */
+  --color-base-200: #f9fafb;
+  --color-base-300: #e5e7eb;
+  --color-base-content: #1f2937; /* মেইন টেক্সট কালার */
+}
+
+body{
+  overflow-x: hidden;
+}
