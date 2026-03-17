@@ -22,6 +22,7 @@ const Login = () => {
     return <Loader></Loader>;
   }
 
+  // Handle Google Login
   const handleGoogleLogin = () => {
     googleLogin()
       .then((result) => {
@@ -33,7 +34,7 @@ const Login = () => {
           confirmButtonColor: "#ff4d4d",
           customClass: { popup: "rounded-3xl shadow-lg" },
         });
-        navigate("/"); // redirect after login
+        navigate("/");
       })
       .catch((err) => {
         MySwal.fire({
@@ -48,9 +49,21 @@ const Login = () => {
       });
   };
 
+  // Facebook Modal Function
+  const handleFacebookLogin = () => {
+    MySwal.fire({
+      title: <p className="font-bold">Facebook Login</p>,
+      text: "Facebook user mood now is deactivated, please use Google login.",
+      icon: "info",
+      background: "#fff5e6",
+      color: "#ff4d4d",
+      confirmButtonColor: "#3b5998", // Facebook Blue color
+      customClass: { popup: "rounded-3xl shadow-lg" },
+    });
+  };
+
   const onSubmit = (data) => {
     const { email, password } = data;
-
     signInEmail(email, password)
       .then((res) => {
         MySwal.fire({
@@ -62,7 +75,7 @@ const Login = () => {
           confirmButtonColor: "#ff4d4d",
           customClass: { popup: "rounded-3xl shadow-lg" },
         });
-        navigate("/"); // redirect after login
+        navigate("/");
       })
       .catch((err) => {
         MySwal.fire({
@@ -86,7 +99,6 @@ const Login = () => {
 
         {/* ================= LOGIN FORM ================= */}
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-          {/* EMAIL */}
           <div>
             <input
               type="email"
@@ -107,7 +119,6 @@ const Login = () => {
             )}
           </div>
 
-          {/* PASSWORD */}
           <div>
             <input
               type="password"
@@ -156,6 +167,7 @@ const Login = () => {
           </button>
 
           <button
+            onClick={handleFacebookLogin} // ক্লিক করলে মোডাল দেখাবে
             type="button"
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-2xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300"
           >
