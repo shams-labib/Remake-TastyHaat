@@ -1,8 +1,28 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { MapPin, Search, Utensils, Star, Clock } from "lucide-react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
 
 const Hero = () => {
+  // --- Modal function ---
+  const handleFindFood = () => {
+    MySwal.fire({
+      title: <p className="font-bold">Notice</p>,
+      text: "More food adding, now find food in All Menu section.",
+      icon: "info",
+      background: "#fff5e6",
+      color: "#ff4d4d",
+      confirmButtonColor: "#ff4d4d",
+      customClass: { popup: "rounded-3xl shadow-lg" },
+      showClass: {
+        popup: "animate__animated animate__fadeInUp", // মোডাল নিচ থেকে ওপরে ওঠার জন্য
+      },
+    });
+  };
+
   // Animation variants for staggered children
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -87,7 +107,11 @@ const Hero = () => {
                     className="w-full bg-transparent text-slate-900 dark:text-white outline-none placeholder:text-slate-400 dark:placeholder:text-gray-400 font-medium text-sm md:text-base"
                   />
                 </div>
-                <button className="w-full sm:w-auto px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl sm:rounded-full transition-all duration-300 shadow-lg shadow-orange-600/30 active:scale-95 flex items-center justify-center gap-2 overflow-hidden relative">
+                {/* বাটনে ফাংশনটি যোগ করা হয়েছে */}
+                <button
+                  onClick={handleFindFood}
+                  className="w-full sm:w-auto px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl sm:rounded-full transition-all duration-300 shadow-lg shadow-orange-600/30 active:scale-95 flex items-center justify-center gap-2 overflow-hidden relative"
+                >
                   <Search size={18} />
                   <span>Find Food</span>
                 </button>
