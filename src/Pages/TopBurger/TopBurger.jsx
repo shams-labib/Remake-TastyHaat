@@ -48,101 +48,131 @@ const topBurgers = [
 
 const TopSellerBurgers = () => {
   return (
-    <div className="container mx-auto py-16 px-4 relative">
-      <h2 className="text-3xl md:text-5xl font-bold text-center mb-12 text-gray-900 dark:text-white relative w-full">
-        <motion.div
-          className="absolute -top-6 left-1/2 -translate-x-1/2 text-primary"
-          animate={{ y: [0, -10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
+    // Fixed: Added light mode background and full width
+    <div className="w-full  dark:bg-gray-800 py-20 px-4 transition-colors duration-300">
+      <div className="container mx-auto relative">
+        <h2 className="text-3xl md:text-5xl font-extrabold text-center mb-16 text-gray-900 dark:text-white relative w-full">
+          {/* Floating Icons with adjusted colors for light mode visibility */}
+          <motion.div
+            className="absolute -top-10 left-1/2 -translate-x-1/2 text-orange-500"
+            animate={{ y: [0, -12, 0] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+          >
+            <Star size={32} fill="currentColor" />
+          </motion.div>
+
+          <motion.div
+            className="absolute -top-4 left-[20%] text-amber-600 hidden md:block"
+            animate={{ y: [0, 8, 0], rotate: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 2.5 }}
+          >
+            <Coffee size={30} />
+          </motion.div>
+
+          <motion.div
+            className="absolute -bottom-10 right-[20%] text-red-500 hidden md:block"
+            animate={{ rotate: [0, 15, 0], scale: [1, 1.1, 1] }}
+            transition={{ repeat: Infinity, duration: 3 }}
+          >
+            <Pizza size={32} />
+          </motion.div>
+
+          <span className="relative z-10">
+            Top Seller{" "}
+            <span className="text-orange-600 dark:text-orange-400">
+              Burgers
+            </span>
+          </span>
+        </h2>
+
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          autoplay={{ delay: 3500, disableOnInteraction: false }}
+          loop={true}
+          spaceBetween={30}
+          slidesPerView={1}
+          pagination={{
+            clickable: true,
+            el: ".custom-pagination-burgers",
+          }}
+          breakpoints={{
+            640: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 4 },
+          }}
+          className="pb-12"
         >
-          <Star size={28} />
-        </motion.div>
-
-        <motion.div
-          className="absolute -top-4 left-1/3 text-primary"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2.2 }}
-        >
-          <Coffee size={28} />
-        </motion.div>
-
-        <motion.div
-          className="absolute -bottom-6 right-1/3 text-primary"
-          animate={{ rotate: [0, 15, 0], scale: [1, 1.2, 1] }}
-          transition={{ repeat: Infinity, duration: 3 }}
-        >
-          <Pizza size={28} />
-        </motion.div>
-
-        <span className="relative z-10 inline-block">
-          Top Seller <span className="text-primary">Burgers</span>
-        </span>
-      </h2>
-
-      <Swiper
-        modules={[Pagination, Autoplay]}
-        autoplay={{ delay: 3500, disableOnInteraction: false }}
-        loop={true}
-        spaceBetween={40}
-        slidesPerView={1}
-        pagination={{
-          clickable: true,
-          el: ".custom-pagination",
-        }}
-        breakpoints={{
-          640: { slidesPerView: 1 },
-          768: { slidesPerView: 4 },
-          1024: { slidesPerView: 4 },
-        }}
-      >
-        {topBurgers.map((burger, i) => (
-          <SwiperSlide key={i}>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.2 }}
-              className="flex flex-col items-center text-center cursor-pointer p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-2xl transition-shadow duration-300"
-            >
-              {/* Burger Image */}
-              <div className="w-40 h-40 mb-4 rounded-full overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700">
-                <img
-                  src={burger.img}
-                  alt={burger.name}
-                  className="w-full h-full rounded-full hover:scale-110 transition-transform duration-300 object-cover"
-                />
-              </div>
-
-              <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-                {burger.name}
-              </h3>
-
-              <div className="flex items-center gap-1 mb-3 justify-center">
-                {[...Array(5)].map((_, idx) => (
-                  <FaStar key={idx} className="text-yellow-400" />
-                ))}
-              </div>
-
-              {/* Burger Description */}
-              <p className="text-gray-600 dark:text-gray-300 line-clamp-1 text-sm mb-4 px-2">
-                {burger.desc}
-              </p>
-
-              <p className="text-lg font-bold text-primary mb-4">
-                {burger.price}
-              </p>
-
-              <motion.button
-                whileHover={{ scale: 1.1, brightness: 1.2 }}
-                className="px-6 py-2 rounded-full bg-linear-to-r from-primary to-secondary text-white font-semibold transition-all duration-300"
+          {topBurgers.map((burger, i) => (
+            <SwiperSlide key={i} className="py-2">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                // Improved Card UI for Light Mode
+                className="flex flex-col items-center text-center p-6 rounded-[2.5rem] bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-2xl transition-all duration-300"
               >
-                Order Now
-              </motion.button>
-            </motion.div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+                {/* Burger Image Container */}
+                <div className="relative w-44 h-44 mb-6">
+                  <div className="absolute inset-0 bg-orange-100 dark:bg-orange-900/20 rounded-full scale-110 -z-0"></div>
+                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-md">
+                    <img
+                      src={burger.img}
+                      alt={burger.name}
+                      className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
 
-      <div className="custom-pagination mt-8 flex justify-center"></div>
+                <h3 className="text-xl font-bold mb-1 text-gray-900 dark:text-white">
+                  {burger.name}
+                </h3>
+
+                <div className="flex items-center gap-1 mb-3 justify-center">
+                  {[...Array(5)].map((_, idx) => (
+                    <FaStar key={idx} className="text-yellow-400 text-sm" />
+                  ))}
+                </div>
+
+                <p className="text-gray-500 dark:text-gray-400 text-sm mb-4 h-10 line-clamp-2 px-2 leading-tight">
+                  {burger.desc}
+                </p>
+
+                <div className="flex flex-col items-center gap-3 w-full mt-auto">
+                  <span className="text-2xl font-black text-orange-600 dark:text-orange-400">
+                    {burger.price}
+                  </span>
+
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full py-3 rounded-full bg-orange-600 hover:bg-orange-700 text-white font-bold shadow-lg shadow-orange-200 dark:shadow-none transition-colors"
+                  >
+                    Order Now
+                  </motion.button>
+                </div>
+              </motion.div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        {/* Custom Pagination Container */}
+        <div className="custom-pagination-burgers mt-10 flex justify-center"></div>
+      </div>
+
+      <style>{`
+        .custom-pagination-burgers .swiper-pagination-bullet {
+          width: 10px;
+          height: 10px;
+          background: #ea580c;
+          opacity: 0.2;
+        }
+        .custom-pagination-burgers .swiper-pagination-bullet-active {
+          width: 30px;
+          border-radius: 5px;
+          opacity: 1;
+        }
+      `}</style>
     </div>
   );
 };
