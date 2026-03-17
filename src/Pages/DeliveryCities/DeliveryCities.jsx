@@ -66,7 +66,7 @@ const cities = [
 
 const DeliveryCities = () => {
   return (
-    <section className="bg-white dark:bg-gray-950 py-20 px-4 transition-colors duration-300">
+    <section className="bg-white dark:bg-gray-800 py-20 px-4 transition-colors duration-300">
       <div className="container mx-auto">
         {/* Title Section */}
         <div className="flex justify-between items-end mb-10">

@@ -91,7 +91,7 @@ const MenuDetails = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-100 dark:bg-slate-950 px-4 py-12 lg:py-20 transition-colors">
+    <div className="min-h-screen bg-base-100 dark:bg-slate-800 px-4 py-12 lg:py-20 transition-colors">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 lg:gap-16 items-start">
         {/* LEFT: IMAGE SECTION */}
         <motion.div

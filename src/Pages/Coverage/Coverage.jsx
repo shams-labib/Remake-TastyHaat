@@ -48,7 +48,7 @@ const Coverage = ({ coverageData = [] }) => {
   };
 
   return (
-    <section className="py-20 bg-white dark:bg-gray-950">
+    <section className="py-20 bg-white dark:bg-gray-800">
       <motion.div
         initial="hidden"
         whileInView="visible"

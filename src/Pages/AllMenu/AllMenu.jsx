@@ -54,7 +54,7 @@ const AllMenu = () => {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="min-h-screen bg-base-100 dark:bg-slate-950 pb-20 transition-colors duration-300">
+    <div className="min-h-screen bg-base-100 dark:bg-slate-800 pb-20 transition-colors duration-300">
       <div className="container mx-auto px-4">
         {/* HEADER SECTION */}
         <div className="py-12 text-center">

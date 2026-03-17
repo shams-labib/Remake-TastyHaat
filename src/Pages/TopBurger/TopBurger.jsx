@@ -50,7 +50,7 @@ const TopSellerBurgers = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="w-full  dark:bg-gray-900 py-20 px-4 transition-colors duration-300">
+    <div className="w-full  dark:bg-gray-800 py-20 px-4 transition-colors duration-300">
       <div className="container mx-auto relative">
         <h2 className="text-3xl md:text-5xl font-extrabold text-center mb-16 text-gray-900 dark:text-white relative w-full">
           <motion.div
