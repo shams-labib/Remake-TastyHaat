@@ -81,6 +81,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-tr from-orange-50 to-red-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center px-4 py-10">
+      {/* DEMO LOGIN SECTION */}
       <div className="w-full max-w-md bg-white/40 dark:bg-gray-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-10 border border-white/20 dark:border-gray-700/40">
         <h2 className="text-3xl font-extrabold text-center mb-8 dark:text-white">
           Welcome Back to <span className="text-red-600">TastyHaat</span>
@@ -135,7 +136,7 @@ const Login = () => {
           <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600"></div>
         </div>
 
-        {/* SOCIAL LOGIN */}
+        {/* SOCIAL  */}
         <div className="flex gap-4 justify-center">
           <button
             onClick={handleGoogleLogin}
@@ -162,8 +163,6 @@ const Login = () => {
             Sign Up
           </Link>
         </p>
-
-        {/* DEMO LOGIN SECTION */}
         <DemoLogin setValue={setValue} handleLoginSubmit={handleLoginSubmit} />
       </div>
     </div>
