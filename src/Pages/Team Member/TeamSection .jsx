@@ -63,7 +63,7 @@ const teamMembers = [
   {
     name: "Taslima Akter",
     role: "Member",
-    img: "https://i.ibb.co.com/9myP8CYW/208586980.jpg",
+    img: "https://i.ibb.co/9myP8CYW/208586980.jpg",
     bio: "Designs landing pages that convert with clean layouts, responsive design, and subtle animations.",
     skills: ["React", "Swiper", "Framer Motion", "TailwindCSS"],
     github: "#",
@@ -88,119 +88,131 @@ const TeamSection = () => {
   }, []);
 
   return (
-    <div className="bg-gray-50 container mx-auto dark:bg-gray-800 py-20 px-4 md:px-8 relative">
-      {/* Section Heading with animated icons */}
-      <div className="relative text-center mb-14">
-        <motion.div
-          {...floatAnim}
-          className="absolute left-1/2 -translate-x-1/2 -top-10 text-primary"
-        >
-          <Users size={34} />
-        </motion.div>
+    // Added bg-gray-50 for light mode
+    <div className="w-full  dark:bg-gray-800 py-20 px-4 md:px-8 relative transition-colors duration-300">
+      <div className="container mx-auto">
+        {/* Section Heading */}
+        <div className="relative text-center mb-16">
+          <motion.div
+            {...floatAnim}
+            className="absolute left-1/2 -translate-x-1/2 -top-10 text-indigo-500"
+          >
+            <Users size={34} />
+          </motion.div>
 
-        <motion.div
-          {...floatAnim}
-          className="absolute left-[30%] top-0 text-primary"
-        >
-          <Star size={26} />
-        </motion.div>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white relative z-10">
+            Meet Our{" "}
+            <span className="text-indigo-600 dark:text-indigo-400">Team</span>
+          </h2>
+          <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Our talented developers and designers working together to build the
+            future.
+          </p>
+        </div>
 
-        <motion.div
-          animate={{ rotate: [0, 15, -15, 0] }}
-          transition={{ duration: 3, repeat: Infinity }}
-          className="absolute right-[30%] top-0 text-primary"
+        {/* Swiper */}
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          autoplay={{ delay: 3500, disableOnInteraction: false }}
+          loop
+          spaceBetween={30}
+          slidesPerView={1}
+          pagination={{
+            clickable: true,
+            el: ".custom-pagination",
+          }}
+          breakpoints={{
+            640: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+          }}
+          className="pb-12"
         >
-          <Settings size={26} />
-        </motion.div>
+          {teamMembers.map((member, i) => (
+            <SwiperSlide key={i} className="py-4">
+              <motion.div
+                data-aos="fade-up"
+                whileHover={{ y: -8 }}
+                // Improved Card styling for Light/Dark
+                className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-3xl shadow-xl p-8 flex flex-col items-center text-center transition-all"
+              >
+                {/* Image Wrapper */}
+                <div className="relative mb-6">
+                  <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-indigo-500 shadow-xl">
+                    <img
+                      src={member.img}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
 
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white relative z-10">
-          Meet Our <span className="text-primary">Team</span>
-        </h2>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {member.name}
+                </h3>
+
+                <p className="text-indigo-600 dark:text-indigo-400 font-bold text-sm uppercase tracking-wider mb-3">
+                  {member.role}
+                </p>
+
+                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4 line-clamp-3">
+                  {member.bio}
+                </p>
+
+                <p className="text-xs font-medium text-gray-400 dark:text-gray-500 mb-5">
+                  {member.college}
+                </p>
+
+                {/* Skills - Better contrast for Light Mode */}
+                <div className="flex flex-wrap justify-center gap-2 mb-6">
+                  {member.skills.map((skill, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 border border-indigo-100 dark:border-indigo-800"
+                    >
+                      <Code size={12} /> {skill}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Social icons */}
+                <div className="flex gap-5">
+                  <motion.a
+                    whileHover={{ scale: 1.2 }}
+                    className="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                    href={member.github}
+                  >
+                    <FaGithub size={22} />
+                  </motion.a>
+                  <motion.a
+                    whileHover={{ scale: 1.2 }}
+                    className="text-gray-400 hover:text-blue-600 transition-colors"
+                    href={member.linkedin}
+                  >
+                    <FaLinkedin size={22} />
+                  </motion.a>
+                </div>
+              </motion.div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        {/* Pagination styling */}
+        <div className="custom-pagination flex justify-center mt-4"></div>
       </div>
 
-      {/* Swiper */}
-      <Swiper
-        modules={[Pagination, Autoplay]}
-        autoplay={{ delay: 3500, disableOnInteraction: false }}
-        loop
-        spaceBetween={30}
-        slidesPerView={1}
-        pagination={{
-          clickable: true,
-          el: ".custom-pagination",
-        }}
-        breakpoints={{
-          640: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-        }}
-      >
-        {teamMembers.map((member, i) => (
-          <SwiperSlide key={i}>
-            <motion.div
-              data-aos="fade-up"
-              whileHover={{ y: -8, scale: 1.03 }}
-              className="bg-linear-to-br from-indigo-50 to-purple-50 dark:from-gray-800/80 dark:to-gray-700/70 rounded-3xl shadow-xl p-6 flex flex-col items-center text-center transition-all"
-            >
-              {/* Image */}
-              <div className="w-32 h-32 mb-4 rounded-full overflow-hidden border-4 border-primary shadow-lg">
-                <img
-                  src={member.img}
-                  alt={member.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                {member.name}
-              </h3>
-
-              <p className="text-primary font-semibold mb-2">{member.role}</p>
-
-              <p className="text-gray-600 line-clamp-2 dark:text-gray-300 text-sm mb-3">
-                {member.bio}
-              </p>
-
-              <p className="text-xs italic text-gray-500 dark:text-gray-400 mb-3">
-                {member.college}
-              </p>
-
-              {/* Skills */}
-              <div className="flex flex-wrap justify-center gap-2 mb-4">
-                {member.skills.map((skill, idx) => (
-                  <motion.span
-                    whileHover={{ scale: 1.1 }}
-                    key={idx}
-                    className="bg-primary/20 text-black dark:text-white px-3 py-1 rounded-full text-xs flex items-center gap-1"
-                  >
-                    <Code size={14} /> {skill}
-                  </motion.span>
-                ))}
-              </div>
-
-              {/* Social icons */}
-              <div className="flex gap-4 mt-2">
-                {[
-                  { icon: <FaGithub />, color: "hover:text-black" },
-                  { icon: <FaLinkedin />, color: "hover:text-blue-600" },
-                ].map((item, idx) => (
-                  <motion.a
-                    key={idx}
-                    whileHover={{ scale: 1.3, rotate: 10 }}
-                    className={`text-xl text-gray-600 dark:text-gray-300 ${item.color}`}
-                    href="#"
-                  >
-                    {item.icon}
-                  </motion.a>
-                ))}
-              </div>
-            </motion.div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-      {/* Pagination outside */}
-      <div className="custom-pagination flex justify-center mt-8"></div>
+      {/* Custom Pagination CSS - Add this to your Global CSS if possible */}
+      <style>{`
+        .custom-pagination .swiper-pagination-bullet {
+          background: #4f46e5;
+          opacity: 0.3;
+        }
+        .custom-pagination .swiper-pagination-bullet-active {
+          opacity: 1;
+          width: 24px;
+          border-radius: 5px;
+        }
+      `}</style>
     </div>
   );
 };
