@@ -6,15 +6,18 @@ import useAuth from "../../../Context/useAuth/useAuth";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Loader from "../../Loader/Loader";
+import DemoLogin from "../../DemoLogin/DemoLogin";
 
 const MySwal = withReactContent(Swal);
 
 const Login = () => {
   const { googleLogin, signInEmail, loading } = useAuth();
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -22,47 +25,8 @@ const Login = () => {
     return <Loader></Loader>;
   }
 
-  // Handle Google Login
-  const handleGoogleLogin = () => {
-    googleLogin()
-      .then((result) => {
-        MySwal.fire({
-          title: <p>🎉 Logged in with Google!</p>,
-          icon: "success",
-          background: "#fff5e6",
-          color: "#ff4d4d",
-          confirmButtonColor: "#ff4d4d",
-          customClass: { popup: "rounded-3xl shadow-lg" },
-        });
-        navigate("/");
-      })
-      .catch((err) => {
-        MySwal.fire({
-          title: <p>⚠️ Login Failed</p>,
-          text: err.message,
-          icon: "error",
-          background: "#fff5e6",
-          color: "#ff4d4d",
-          confirmButtonColor: "#ff4d4d",
-          customClass: { popup: "rounded-3xl shadow-lg" },
-        });
-      });
-  };
-
-  // Facebook Modal Function
-  const handleFacebookLogin = () => {
-    MySwal.fire({
-      title: <p className="font-bold">Facebook Login</p>,
-      text: "Facebook user mood now is deactivated, please use Google login.",
-      icon: "info",
-      background: "#fff5e6",
-      color: "#ff4d4d",
-      confirmButtonColor: "#3b5998", // Facebook Blue color
-      customClass: { popup: "rounded-3xl shadow-lg" },
-    });
-  };
-
-  const onSubmit = (data) => {
+  // Common Login Handler for both Form and Auto-Login
+  const handleLoginSubmit = (data) => {
     const { email, password } = data;
     signInEmail(email, password)
       .then((res) => {
@@ -90,26 +54,48 @@ const Login = () => {
       });
   };
 
+  // Social Login Handlers
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then(() => {
+        MySwal.fire({
+          title: <p>🎉 Logged in with Google!</p>,
+          icon: "success",
+          confirmButtonColor: "#ff4d4d",
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const handleFacebookLogin = () => {
+    MySwal.fire({
+      title: <p className="font-bold">Facebook Login</p>,
+      text: "Facebook login is currently deactivated.",
+      icon: "info",
+      confirmButtonColor: "#3b5998",
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-orange-50 to-red-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-tr from-orange-50 to-red-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-md bg-white/40 dark:bg-gray-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-10 border border-white/20 dark:border-gray-700/40">
         <h2 className="text-3xl font-extrabold text-center mb-8 dark:text-white">
           Welcome Back to <span className="text-red-600">TastyHaat</span>
         </h2>
 
-        {/* ================= LOGIN FORM ================= */}
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+        {/* LOGIN FORM */}
+        <form
+          onSubmit={handleSubmit(handleLoginSubmit)}
+          className="flex flex-col gap-5"
+        >
           <div>
             <input
               type="email"
               placeholder="Email"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: "Invalid email address",
-                },
-              })}
+              {...register("email", { required: "Email is required" })}
               className="w-full p-4 rounded-2xl border border-gray-200 dark:border-gray-600 bg-white/60 dark:bg-gray-700 text-gray-800 dark:text-gray-100 outline-none focus:ring-2 focus:ring-red-500 transition duration-300"
             />
             {errors.email && (
@@ -123,13 +109,7 @@ const Login = () => {
             <input
               type="password"
               placeholder="Password"
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters",
-                },
-              })}
+              {...register("password", { required: "Password is required" })}
               className="w-full p-4 rounded-2xl border border-gray-200 dark:border-gray-600 bg-white/60 dark:bg-gray-700 text-gray-800 dark:text-gray-100 outline-none focus:ring-2 focus:ring-red-500 transition duration-300"
             />
             {errors.password && (
@@ -147,7 +127,6 @@ const Login = () => {
           </button>
         </form>
 
-        {/* ================= DIVIDER ================= */}
         <div className="flex items-center my-6">
           <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600"></div>
           <span className="mx-3 text-gray-500 dark:text-gray-400 font-semibold">
@@ -156,20 +135,19 @@ const Login = () => {
           <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600"></div>
         </div>
 
-        {/* ================= SOCIAL LOGIN ================= */}
+        {/* SOCIAL LOGIN */}
         <div className="flex gap-4 justify-center">
           <button
             onClick={handleGoogleLogin}
             type="button"
-            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-5 py-3 rounded-2xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300"
+            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-5 py-3 rounded-2xl shadow-md transition duration-300"
           >
             <FaGoogle /> Google
           </button>
-
           <button
-            onClick={handleFacebookLogin} // ক্লিক করলে মোডাল দেখাবে
+            onClick={handleFacebookLogin}
             type="button"
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-2xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300"
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-2xl shadow-md transition duration-300"
           >
             <FaFacebook /> Facebook
           </button>
@@ -178,12 +156,15 @@ const Login = () => {
         <p className="text-center text-gray-500 dark:text-gray-400 mt-6 text-sm">
           Don't have an account?{" "}
           <Link
-            to={"/register"}
+            to="/register"
             className="text-red-600 hover:underline font-medium"
           >
             Sign Up
           </Link>
         </p>
+
+        {/* DEMO LOGIN SECTION */}
+        <DemoLogin setValue={setValue} handleLoginSubmit={handleLoginSubmit} />
       </div>
     </div>
   );
