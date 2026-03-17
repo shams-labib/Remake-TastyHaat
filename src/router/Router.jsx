@@ -29,6 +29,7 @@ import PaymentHistory from "../Pages/Dashboard/OrderHistory/PaymentHistory";
 import SellerRoute from "./SellerRoute";
 import AdminRoute from "./AdminRoute";
 import NotSellerAdminRoute from "./NotSellerAdminRoute";
+import CoveragePage from "../Pages/Coverage/CoveragePage";
 
 export const router = createBrowserRouter([
   {
@@ -87,6 +88,11 @@ export const router = createBrowserRouter([
       {
         path: "/terms-conditions",
         Component: TermsConditions,
+      },
+      {
+        path: "/coveragePage",
+        loader: () => fetch("/serviceCenter.json").then((res) => res.json()),
+        element: <CoveragePage />,
       },
     ],
   },
