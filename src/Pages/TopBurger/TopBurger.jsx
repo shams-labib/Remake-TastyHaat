@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
-import { motion } from "framer-motion";
-import { Star, Pizza, Coffee } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Star, Pizza, Coffee, X } from "lucide-react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { FaStar } from "react-icons/fa";
@@ -42,17 +42,17 @@ const topBurgers = [
     name: "Classic Beef Stack",
     desc: "Juicy beef patty with onion and special sauce",
     price: "$15.50",
-    img: "https://i.ibb.co.com/mF9W4zYG/photo-1705131186344-beaed61d95b4.avif",
+    img: "https://i.ibb.co.com/bR1T5pCd/istockphoto-457520387-612x612.jpg",
   },
 ];
 
 const TopSellerBurgers = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    // Fixed: Added light mode background and full width
-    <div className="w-full  dark:bg-gray-800 py-20 px-4 transition-colors duration-300">
+    <div className="w-full  dark:bg-gray-900 py-20 px-4 transition-colors duration-300">
       <div className="container mx-auto relative">
         <h2 className="text-3xl md:text-5xl font-extrabold text-center mb-16 text-gray-900 dark:text-white relative w-full">
-          {/* Floating Icons with adjusted colors for light mode visibility */}
           <motion.div
             className="absolute -top-10 left-1/2 -translate-x-1/2 text-orange-500"
             animate={{ y: [0, -12, 0] }}
@@ -109,13 +109,13 @@ const TopSellerBurgers = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                // Improved Card UI for Light Mode
-                className="flex flex-col items-center text-center p-6 rounded-[2.5rem] bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-2xl transition-all duration-300"
+                // Removed all shadow classes here
+                className="flex flex-col items-center text-center p-6 rounded-[2.5rem] bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 transition-all duration-300"
               >
-                {/* Burger Image Container */}
                 <div className="relative w-44 h-44 mb-6">
                   <div className="absolute inset-0 bg-orange-100 dark:bg-orange-900/20 rounded-full scale-110 -z-0"></div>
-                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-md">
+                  {/* Removed shadow from image border */}
+                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white dark:border-gray-700">
                     <img
                       src={burger.img}
                       alt={burger.name}
@@ -144,9 +144,11 @@ const TopSellerBurgers = () => {
                   </span>
 
                   <motion.button
+                    onClick={() => setIsOpen(true)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="w-full py-3 rounded-full bg-orange-600 hover:bg-orange-700 text-white font-bold shadow-lg shadow-orange-200 dark:shadow-none transition-colors"
+                    // Removed shadow-lg and shadow-orange-200 from button
+                    className="w-full py-3 rounded-full bg-orange-600 hover:bg-orange-700 text-white font-bold transition-colors"
                   >
                     Order Now
                   </motion.button>
@@ -156,9 +158,54 @@ const TopSellerBurgers = () => {
           ))}
         </Swiper>
 
-        {/* Custom Pagination Container */}
         <div className="custom-pagination-burgers mt-10 flex justify-center"></div>
       </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 20 }}
+              className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl max-w-sm w-full text-center border border-gray-100 dark:border-gray-700"
+            >
+              <button
+                onClick={() => setIsOpen(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-white"
+              >
+                <X size={24} />
+              </button>
+
+              <div className="w-20 h-20 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Coffee className="text-orange-600" size={40} />
+              </div>
+
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                Website Updated
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 font-medium">
+                Coming soon! Stay tuned for our ordering system.
+              </p>
+
+              <button
+                onClick={() => setIsOpen(false)}
+                className="mt-6 w-full py-3 bg-gray-900 dark:bg-orange-600 text-white rounded-full font-bold hover:opacity-90 transition-opacity"
+              >
+                Got it!
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       <style>{`
         .custom-pagination-burgers .swiper-pagination-bullet {

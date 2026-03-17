@@ -29,7 +29,7 @@ const sliderImages = [
 
 const TopSlider = () => {
   return (
-    <section className="container mx-auto my-6 md:my-10 px-0 sm:px-4">
+    <section className="container mx-auto  md:my-10 px-0 sm:px-4">
       {/* Mobile-e height barano hoyeche (h-[500px]) */}
       <div className="relative w-full h-[500px] md:h-[600px] overflow-hidden sm:rounded-[2rem] shadow-2xl group">
         <Swiper
