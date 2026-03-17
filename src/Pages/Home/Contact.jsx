@@ -12,7 +12,7 @@ const Contact = () => {
     // overflow-hidden add kora hoyeche jate slide animation-er somoy scrollbar na ashe
     <section
       id="contact"
-      className="bg-gray-50 dark:bg-gray-800 py-16 px-4 overflow-hidden"
+      className=" dark:bg-gray-800 py-16 px-4 overflow-hidden"
     >
       <div className="container mx-auto grid gap-8 lg:grid-cols-2 md:px-8">
         {/* Left Card: Info */}
