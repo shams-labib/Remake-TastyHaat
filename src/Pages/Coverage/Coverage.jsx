@@ -8,6 +8,19 @@ import {
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 
+// --- Leaflet Icon Fix for Production (Netlify/Vercel) ---
+import L from "leaflet";
+import icon from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
+L.Marker.prototype.options.icon = DefaultIcon;
+
 const entryVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -36,7 +49,6 @@ const Coverage = ({ coverageData = [] }) => {
 
   return (
     <section className="py-20 bg-white dark:bg-gray-950">
-      {/* Tailwind কাস্টম কন্টেইনার ব্যবহার করা হয়েছে */}
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -61,7 +73,6 @@ const Coverage = ({ coverageData = [] }) => {
             </p>
           </div>
 
-          {/* Search Bar - Header এর পাশে বসানো হয়েছে (Desktop) */}
           <form
             onSubmit={handleSearch}
             className="flex items-center bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full p-1.5 w-full md:max-w-sm transition-all focus-within:bg-white dark:focus-within:bg-gray-900 focus-within:shadow-xl focus-within:ring-1 ring-orange-500/50"
@@ -83,7 +94,7 @@ const Coverage = ({ coverageData = [] }) => {
 
         {/* --- Map Frame --- */}
         <div className="relative group">
-          <div className="relative h-[500px] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-800">
+          <div className="relative h-[500px] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-800 isolate">
             <MapContainer
               center={position}
               ref={mapRef}
@@ -122,9 +133,10 @@ const Coverage = ({ coverageData = [] }) => {
               ))}
             </MapContainer>
 
-            {/* Float Info Card */}
-            <div className="absolute top-6 right-6 z-[500] hidden sm:block">
-              <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800">
+            {/* --- FIXED FLOAT CARD --- */}
+            {/* z-[999] ব্যবহার করা হয়েছে যাতে ম্যাপের লেয়ারের ওপরে থাকে */}
+            <div className="absolute top-6 right-6 z-[999] pointer-events-none hidden sm:block">
+              <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 pointer-events-auto">
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-2">
                     {[1, 2, 3].map((i) => (
@@ -150,6 +162,7 @@ const Coverage = ({ coverageData = [] }) => {
                 </div>
               </div>
             </div>
+            {/* ----------------------- */}
           </div>
         </div>
       </motion.div>
@@ -157,7 +170,7 @@ const Coverage = ({ coverageData = [] }) => {
       <style>{`
         .custom-popup .leaflet-popup-content-wrapper { border-radius: 12px; padding: 0; }
         .custom-popup .leaflet-popup-content { margin: 0; }
-        .leaflet-container { font-family: inherit; }
+        .leaflet-container { font-family: inherit; z-index: 1 !important; }
       `}</style>
     </section>
   );
