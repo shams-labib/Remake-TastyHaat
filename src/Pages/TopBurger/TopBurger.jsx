@@ -109,7 +109,6 @@ const TopSellerBurgers = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                // Removed all shadow classes here
                 className="flex flex-col items-center text-center p-6 rounded-[2.5rem] bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 transition-all duration-300"
               >
                 <div className="relative w-44 h-44 mb-6">
