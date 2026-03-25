@@ -140,7 +140,7 @@ const ManageOrders = () => {
           </svg>
         </button>
 
-        {/* Scrollable Page Numbers for Mobile */}
+        {/* Scrollable Page Numbers for  */}
         <div className="flex gap-2 overflow-x-auto no-scrollbar max-w-[200px] sm:max-w-none px-2">
           {Array.from({ length: totalPages }, (_, i) => (
             <button
